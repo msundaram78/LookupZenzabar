@@ -1,0 +1,148 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+ 
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="author" content="Jenzabar:SONIS">
+ 
+ 
+ 
+                <!-- include custom JavaScript -->
+                <script src="js/jquery.main.js"></script>
+                
+                                <script type="text/javascript">
+                                                var showLength = 1;
+                                                var delay = 1000;
+                                                var isPasted = 0;
+                                                var hideAll = setTimeout(function() {}, 0);
+                
+                                                $(document).ready(function(){
+                                                               $('input[type="password"]').each(function(){
+                                                                               var fieldName = $(this).attr("name");
+                
+                                                                               $('<input type="text" class="password-field" value="" name="'+fieldName+'_input'+'">').insertAfter(this);
+                                                                               $('<span class="password-view-hide password-view-button"></span>').insertAfter(this);
+                
+                                                                               var pwHolder = $(this);
+                                                                               var pwField = $(this).nextAll(".password-field").first();
+                
+                                                                               $(this).addClass('password-holder');
+                                                                               $(this).css('display', 'none');
+                                                                               
+                                                                                $(pwField).on('paste', function(){
+                                                                                               isPasted = 1;
+                                                                               });
+                
+                                                                               $(pwField).on('input', function(){
+                                                                                               if(isPasted) {
+                                                                                                               $(pwHolder).val($(this).val());
+                                                                                                               isPasted = 0;
+                                                                                               }
+                                                                                               
+                                                                                                if($(this).val().length == 1) {
+                                                                                                               pwHolder.val($(this).val());
+                                                                                               }
+                                                                                               
+                                                                                                var offset = $(this).val().length - $(pwHolder).val().length;
+                                                                                               if(offset > 0) {
+                                                                                                               $(pwHolder).val(
+                                                                                                                               $(pwHolder).val() +
+                                                                                                                               $(this).val().substring($(pwHolder).val().length,
+                                                                                                                               $(pwHolder).val().length + offset)
+                                                                                                               );
+                                                                                               } else if(offset < 0) {
+                                                                                                               $(pwHolder).val(
+                                                                                                                               $(pwHolder).val().substring(0, $(pwHolder).val().length + offset)
+                                                                                                               );
+                                                                                               }
+                
+                                                                                               if($(this).val().length > showLength) {
+                                                                                                               $(this).val($(this).val().substring(0, $(this).val().length - showLength).replace(/./g, "*") +
+                                                                                                               $(this).val().substring($(this).val().length - showLength, $(this).val().length));
+                                                                                               }
+                
+                                                
+05:26:22 PM:                                     clearTimeout(hideAll);
+                                                                                               var that = this;
+                                                                                    hideAll = setTimeout(function() {
+                                                                                      $(that).val($(that).val().replace(/./g, "*"));
+                                                                                    }, delay);
+                                                                               });
+                                                               });
+                
+                                                               $('.password-view-button').on('click', function(){
+                                                                               var curr = $(this).prevAll('.password-holder').first().val();
+                                                                               var field = $(this).nextAll('.password-field').first();
+                
+                                                                               if($(this).hasClass('password-view-hide')) {
+                                                                                               $(this).addClass('password-view-show');
+                                                                                               $(this).removeClass('password-view-hide');
+                
+                                                                                               $(field).val(curr);
+                                                                               } else if($(this).hasClass('password-view-show')) {
+                                                                                               $(this).addClass('password-view-hide');
+                                                                                               $(this).removeClass('password-view-show');
+                
+                                                                                               $(field).val($(field).val().replace(/./g, "*"));
+                                                                               }
+                                                               });
+                
+                                                               $('.password-view-button').mouseleave(function(){
+                                                                               if($(this).hasClass('password-view-show')) {
+                                                                                               $(this).addClass('password-view-hide');
+                                                                                               $(this).removeClass('password-view-show');
+                
+                                                                                               var field = $(this).nextAll('.password-field').first();
+                                                                                               $(field).val($(field).val().replace(/./g, "*"));
+                                                                               }
+                                                               });
+                                                               
+                                                                $('body').on('click', function(){
+                                                                               var pwField = $('.password-field').last();
+                                                                               var pwHolder = $('.password-holder').last();
+                                                                                if($(pwHolder).val() &
+     &
+      $(pwHolder).val().length > 0 &
+     &
+      $(pwField).val().length == 0) {
+                                                                                               $(pwField).val($(pwHolder).val().replace(/./g, "*"));
+                                                                               }
+                                                                               
+                                                                                $('body').off('click');
+                                                               });
+                
+                                                               var autoFillCheck = setTimeout(function() {
+                                                                               var pwField = $('.password-field').last();
+                                                                               var pwHolder = $('.password-holder').last();
+                                                                               if($(pwHolder).val() &
+     &
+      $(pwHolder).val().length > 0) {
+                                                                                               $(pwField).val($(pwHolder).val().replace(/./g, "*"));
+                                                                                               clearTimeout(autoFillCheck);
+                                                                               }
+                                                    }, 0);
+                                                });
+                                </script>
+                
+ 
+<head><title>SONIS Online Balance Submission Form</title></head>
+<body>
+ 
+ 
+                <cashnet>result=0&
+     respmessage=lname=Mertel&
+     fname=Etienna&
+     custcode=ME1322350&
+     itemcnt=2&
+     itemcode=2021224&
+     balance=0&
+     itemcode2=2022233&
+     balance2=1515&
+     ippsrcamtcnt=2&
+     ippsourceamountcode=IPPBALANCE&
+     amount=0&
+     termcode=2021224&
+     ippsourceamountcode2=IPPBALANCE&
+     amount2=1515&
+     termcode2=2022233</cashnet>
